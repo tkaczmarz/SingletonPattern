@@ -1,29 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-[Serializable]
-public sealed class Singleton
+namespace SingletonPattern
 {
-    private static Singleton instance = null;
-    private static readonly object padlock = new object();
+	public sealed class Singleton
+	{
+		public static int counter = 0;
 
-    public static Singleton Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                lock (padlock)
-                {
-                    if (instance == null)
-                        instance = new Singleton();
-                }
-            }
+		private static Singleton instance = null;
+		private static readonly object padlock = new object();
 
-            return instance;
-        }
-    }
+		public static Singleton Instance
+		{
+			get
+			{
+				if (instance == null)
+				{
+					lock (padlock)
+					{
+						if (instance == null)
+						{
+							instance = new Singleton();
+							Console.WriteLine("Singleton instance initiated");
+						}
+					}
+				}
+				
+				return instance;
+			}
+		}
+
+		private Singleton() { counter++; }
+	}
 }
